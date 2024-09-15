@@ -1,5 +1,5 @@
 import { DataGrid } from '@mui/x-data-grid';
-import { Button } from '@mui/material';
+import { Button, TextField } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import { axiosRequest } from '../utils/axios';
 import { useEffect, useState } from 'react';
@@ -14,6 +14,7 @@ export default function CustomerListing() {
     const [rowCount, setRowCount] = useState(0);
     const [updateCustomerDialogue, setUpdateCuatomerDialogue] = useState(false);
     const [selectedCustomer, setSelectedCustomer] = useState({});
+    const [search, setSearch] = useState("");
     const navigate = useNavigate();
 
 
@@ -59,10 +60,18 @@ export default function CustomerListing() {
         getCustomerListing(paginationModel.page + 1, paginationModel.pageSize);
     }, [paginationModel])
 
+    useEffect(() => {
+        setLoading(true);
+        const getData = setTimeout(() => {
+            getCustomerListing(paginationModel.page + 1, paginationModel.pageSize);
+          }, 1000);
+          return () => clearTimeout(getData)
+    }, [search])
+
     const getCustomerListing = async (pageNo, pageSize) => {
         try {
             setLoading(true);
-            const res = await axiosRequest.get(`/api/customer/list?search=&pageNo=${pageNo}&limit=${pageSize}`);
+            const res = await axiosRequest.get(`/api/customer/list?search=${search}&pageNo=${pageNo}&limit=${pageSize}`);
             const dataWithId = res.data.data.map((row, index) => ({
                 ...row,
                 id: index + 1
@@ -95,6 +104,19 @@ export default function CustomerListing() {
                 <h2>Customer Listing</h2>
                 <div >
                     <Button size="small" onClick={handleNameClick}>Go To City Listings<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 13H4V11H12V4L20 12L12 20V13Z"></path></svg></Button>
+                    <TextField
+                        autoFocus
+                        required
+                        margin="dense"
+                        id="company"
+                        name="company"
+                        label="Search by name or city"
+                        type="text"
+                        fullWidth
+                        variant="standard"
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                    />
                 </div>
                 <Paper sx={{ height: '500px', width: '510px' }}>
                     <DataGrid

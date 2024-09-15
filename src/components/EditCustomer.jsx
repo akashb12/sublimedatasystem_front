@@ -119,7 +119,6 @@ const EditCustomer = ({ openDialog, closeDialog, customer }) => {
                     />
                     <TextField
                         autoFocus
-                        required
                         margin="dense"
                         id="file"
                         name="file"
