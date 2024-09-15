@@ -25,17 +25,16 @@ export default function CustomerDetail() {
     const [customerDetails, setCustomerDetails] = useState({});
 
     useEffect(() => {
+        const getCustomerDetails = async () => {
+            try {
+                const res = await axiosRequest.get(`/api/customer/list/${id}`);
+                setCustomerDetails(res.data.data);
+            } catch (error) {
+                console.error("Error fetching customer details:", error);
+            }
+        }
         getCustomerDetails();
     }, [id])
-
-    const getCustomerDetails = async () => {
-        try {
-            const res = await axiosRequest.get(`/api/customer/list/${id}`);
-            setCustomerDetails(res.data.data);
-        } catch (error) {
-            console.error("Error fetching customer details:", error);
-        }
-    }
 
     const handleNameClick = (id) => {
         navigate(`/`);

@@ -36,7 +36,7 @@ const EditCustomer = ({ openDialog, closeDialog, customer }) => {
             formData.append('city', data.city);
             formData.append('company', data.company);
             formData.append('file', file);
-            const res = await axiosRequest.put(`/api/customer/editCustomer/${customer._id}`, formData, {
+            await axiosRequest.put(`/api/customer/editCustomer/${customer._id}`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
