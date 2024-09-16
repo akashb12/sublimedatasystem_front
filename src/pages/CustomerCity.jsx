@@ -36,7 +36,7 @@ export default function CustomerCity() {
                 <div className='go-back'>
                     <Button size="small" onClick={handleNameClick}><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 13V20L4 12L12 4V11H20V13H12Z"></path></svg>Go Back</Button>
                 </div>
-                <Table sx={{ height: '200px', width: '500px' }} aria-label="simple table">
+                <Table sx={{ width: '500px' }} aria-label="simple table">
                     <TableHead>
                         <TableRow>
                             <TableCell>City</TableCell>
